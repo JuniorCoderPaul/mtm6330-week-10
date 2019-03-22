@@ -10,10 +10,7 @@ const uglify = require('gulp-uglify') // load uglify for minifying our js file
 
 // Define a task to compile Sass and run autoprefixer and cssnano
 gulp.task('sass', function () {
-  const plugins = [
-    autoprefixer({ browsers: ['last 2 version'] }),
-    cssnano()
-  ]
+  const plugins = [autoprefixer({ browsers: ['last 2 version'] }), cssnano()]
   return gulp
     .src('scss/**/*.scss') // source of any sass files
     .pipe(sass()) // run the sass compiler on the source file
@@ -24,7 +21,12 @@ gulp.task('sass', function () {
 })
 
 gulp.task('scripts', function () {
-  return gulp.src('js/*.js') // setting the source files for gulp to work with
+  return gulp
+    .src([
+      'node_modules/jquery/dist/jquery.js',
+      'node_modules/bootstrap/dist/js/bootstrap.js',
+      'js/*.js'
+    ]) // setting the source files for gulp to work with
     .pipe(concat('main.js')) // running concat on all the files directly inside js folder with extension .js. The new file will be names main.js
     .pipe(gulp.dest('js/dev')) // save the concatenated file into dev folder
     .pipe(rename('main.min.js')) // pipe the contatenated file and rename it to main.min.js
