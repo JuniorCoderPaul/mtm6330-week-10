@@ -1,4 +1,4 @@
-$(document).ready(function ($) {
+$(document).ready(function($) {
   $('p').css('border-bottom', '1px solid black')
   $('.first').css('border-color', 'red')
   $('#special').css('background-color', '#ffcc00')
@@ -26,10 +26,48 @@ $(document).ready(function ($) {
   // class methods
   console.log($('img:first').hasClass('special'))
   $('img').toggleClass('special')
-})
 
-// event
-$('img').click(function () {
-  console.log($(this))
-  $(this).toggleClass('special')
+  // event
+  $('img').click(function() {
+    console.log($(this))
+    $(this).toggleClass('special')
+  })
+
+  // AJAX
+  $('#content').load('./about.html')
+  $('#contentNav .nav-link').click(function(e) {
+    console.log(e)
+    e.preventDefault()
+    var page = $(this).attr('href')
+    $('#contentNav .active').removeClass('active')
+    $(this).addClass('active')
+    $('#content')
+      .fadeOut(500, function() {
+        $('#content').load(page)
+      })
+      .fadeIn(500)
+    // closeing click event on the nav-link
+  })
+  $.ajax({
+    url: './data/posts.json',
+    type: 'GET',
+    dataType: 'json'
+  }).done(function(data) {
+    console.log(data)
+    var numPosts = data.posts.length
+    for (var i = 0; i < numPosts; i++) {
+      var post = '<div class="col-sm-6 p-5"><h3>'
+      post += i + 1 + '. ' + data.posts[i].title
+      post += '</h3><p>'
+      post += data.posts[i].body
+      post += '</p></div>'
+
+      $('#posts').append(post)
+      // <div class="col-sm-6 p-5">
+      //   <h3>Title</h3>
+      //   <p>Content</p>
+      // </div>
+    }
+  })
+  // close the document.ready
 })
