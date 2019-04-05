@@ -9,7 +9,7 @@ const rename = require('gulp-rename') // load gulp-rename to rename our js file
 const uglify = require('gulp-uglify') // load uglify for minifying our js file
 
 // Define a task to compile Sass and run autoprefixer and cssnano
-gulp.task('sass', function () {
+gulp.task('sass', function() {
   const plugins = [autoprefixer({ browsers: ['last 2 version'] }), cssnano()]
   return gulp
     .src('scss/**/*.scss') // source of any sass files
@@ -20,11 +20,12 @@ gulp.task('sass', function () {
     .pipe(browserSync.stream()) // run the browsersync stream
 })
 
-gulp.task('scripts', function () {
+gulp.task('scripts', function() {
   return gulp
     .src([
       'node_modules/jquery/dist/jquery.js',
       'node_modules/bootstrap/dist/js/bootstrap.js',
+      'node_modules/aos/dist/aos.js',
       'js/*.js'
     ]) // setting the source files for gulp to work with
     .pipe(concat('main.js')) // running concat on all the files directly inside js folder with extension .js. The new file will be names main.js
@@ -35,7 +36,7 @@ gulp.task('scripts', function () {
     .pipe(browserSync.stream()) // run the browsersync stream
 })
 // Define the default task
-gulp.task('default', function () {
+gulp.task('default', function() {
   // initialize browserSync on the current folder
   browserSync.init({ server: './' })
   // watch for changes to any files in scss folder and its sub folders and with .scss extension, run the sass task when a change is found
