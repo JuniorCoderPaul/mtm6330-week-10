@@ -69,7 +69,7 @@ $(document).ready(function ($) {
   //     // </div>
   //   }
   // })
-
+  // second way do ajax
   $.ajax({
     url: 'https://jsonplaceholder.typicode.com/posts',
     type: 'GET',
@@ -90,9 +90,11 @@ $(document).ready(function ($) {
       //   <p>Content</p>
       // </div>
     }
+
+    // close ajax
   })
 
-  // second way do ajax
-
+  // initialize aos
+  AOS.init()
   // close the document.ready
 })
