@@ -1,4 +1,4 @@
-$(document).ready(function($) {
+$(document).ready(function ($) {
   $('p').css('border-bottom', '1px solid black')
   $('.first').css('border-color', 'red')
   $('#special').css('background-color', '#ffcc00')
@@ -28,38 +28,60 @@ $(document).ready(function($) {
   $('img').toggleClass('special')
 
   // event
-  $('img').click(function() {
+  $('img').click(function () {
     console.log($(this))
     $(this).toggleClass('special')
   })
 
   // AJAX
   $('#content').load('./about.html')
-  $('#contentNav .nav-link').click(function(e) {
+  $('#contentNav .nav-link').click(function (e) {
     console.log(e)
     e.preventDefault()
     var page = $(this).attr('href')
     $('#contentNav .active').removeClass('active')
     $(this).addClass('active')
     $('#content')
-      .fadeOut(500, function() {
+      .fadeOut(500, function () {
         $('#content').load(page)
       })
       .fadeIn(500)
     // closeing click event on the nav-link
   })
+  // $.ajax({
+  //   url: './data/posts.json',
+  //   type: 'GET',
+  //   dataType: 'json'
+  // }).done(function(data) {
+  //   console.log(data)
+  //   var numPosts = data.posts.length
+  //   for (var i = 0; i < numPosts; i++) {
+  //     var post = '<div class="col-sm-6 p-5"><h3>'
+  //     post += i + 1 + '. ' + data.posts[i].title
+  //     post += '</h3><p>'
+  //     post += data.posts[i].body
+  //     post += '</p></div>'
+
+  //     $('#posts').append(post)
+  //     // <div class="col-sm-6 p-5">
+  //     //   <h3>Title</h3>
+  //     //   <p>Content</p>
+  //     // </div>
+  //   }
+  // })
+  // second way do ajax
   $.ajax({
-    url: './data/posts.json',
+    url: 'https://jsonplaceholder.typicode.com/posts',
     type: 'GET',
     dataType: 'json'
-  }).done(function(data) {
+  }).done(function (data) {
     console.log(data)
-    var numPosts = data.posts.length
+    var numPosts = data.length
     for (var i = 0; i < numPosts; i++) {
       var post = '<div class="col-sm-6 p-5"><h3>'
-      post += i + 1 + '. ' + data.posts[i].title
+      post += i + 1 + '. ' + data[i].title
       post += '</h3><p>'
-      post += data.posts[i].body
+      post += data[i].body
       post += '</p></div>'
 
       $('#posts').append(post)
@@ -68,6 +90,11 @@ $(document).ready(function($) {
       //   <p>Content</p>
       // </div>
     }
+
+    // close ajax
   })
+
+  // initialize aos
+  AOS.init()
   // close the document.ready
 })
